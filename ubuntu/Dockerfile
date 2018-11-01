@@ -36,10 +36,16 @@ RUN apt-get -y clean
 
 RUN pip3 install fabric
 
+RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
+RUN locale-gen
+RUN update-locale LANG=en_US.UTF-8
+RUN update-alternatives --set editor /usr/bin/vim.basic
+
 # deploy
 RUN useradd -s /bin/zsh -m deploy
 RUN passwd -l deploy
 RUN echo 'deploy ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/101-deploy
+RUN echo "deploy:hi" | chpasswd
 USER deploy
 
 ADD oh-my-zsh.sh /oh-my-zsh.sh
@@ -60,11 +66,6 @@ RUN /rustup.sh
 # setup
 USER root
 
-RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
-RUN locale-gen
-RUN update-locale LANG=en_US.UTF-8
-RUN update-alternatives --set editor /usr/bin/vim.basic
-
 RUN /usr/sbin/rabbitmq-plugins enable rabbitmq_management
 RUN chown rabbitmq:rabbitmq /var/lib/rabbitmq/.erlang.cookie
 RUN chmod 600 /var/lib/rabbitmq/.erlang.cookie
@@ -82,8 +83,6 @@ RUN echo "host    all             all             ::1/128                 trust"
 RUN echo "log_statement = 'all'" >> /etc/postgresql/10/main/postgresql.conf
 
 COPY supervisord.conf /etc/supervisord.conf
-
-RUN echo "deploy:hi" | chpasswd
 
 EXPOSE 3000/tcp 8080/tcp 22/tcp 3306/tcp 5432/tcp 6379/tcp 9200/tcp 5672/tcp 15672/tcp 10000-11000/tcp
 
