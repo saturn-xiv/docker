@@ -7,7 +7,7 @@ ENV DEBIAN_FRONTEND noninteractive
 # packages
 RUN apt-get update
 RUN apt-get -y install curl apt-utils apt-transport-https wget gnupg software-properties-common
-# RUN dpkg --add-architecture armhf
+
 # RUN echo "deb [arch=amd64,i386] http://uk.archive.ubuntu.com/ubuntu/ xenial main universe" > /etc/apt/sources.list
 #
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
@@ -18,40 +18,51 @@ RUN apt-get -y install build-essential locales pkg-config dh-autoreconf \
   gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf binutils-multiarch \
   libsqlite3-dev
 
-RUN echo "deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports/ xenial main restricted multiverse" >> /etc/apt/sources.list
-RUN echo "deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports/ xenial-updates main restricted multiverse" >> /etc/apt/sources.list
-RUN echo "deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports xenial main universe" >> /etc/apt/sources.list
-RUN echo "deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports/ xenial-updates universe" >> /etc/apt/sources.list
+RUN dpkg --add-architecture armhf
+RUN echo "deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ xenial main restricted" > /etc/apt/sources.list
+RUN echo "deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ xenial-updates main restricted" >> /etc/apt/sources.list
+RUN echo "deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ xenial universe" >> /etc/apt/sources.list
+RUN echo "deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ xenial-updates universe" >> /etc/apt/sources.list
+RUN echo "deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ xenial multiverse" >> /etc/apt/sources.list
+RUN echo "deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ xenial-updates multiverse" >> /etc/apt/sources.list
+RUN echo "deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ xenial-backports main restricted universe multiverse" >> /etc/apt/sources.list
+RUN echo "deb [arch=amd64] http://security.ubuntu.com/ubuntu/ xenial-security main restricted" >> /etc/apt/sources.list
+RUN echo "deb [arch=amd64] http://security.ubuntu.com/ubuntu/ xenial-security universe" >> /etc/apt/sources.list
+RUN echo "deb [arch=amd64] http://security.ubuntu.com/ubuntu/ xenial-security multiverse" >> /etc/apt/sources.list
+
+RUN echo "deb [arch=armhf] http://ports.ubuntu.com/ xenial main restricted universe multiverse" >> /etc/apt/sources.list
+RUN echo "deb [arch=armhf] http://ports.ubuntu.com/ xenial-security main restricted universe multiverse" >> /etc/apt/sources.list
+RUN echo "deb [arch=armhf] http://ports.ubuntu.com/ xenial-updates main restricted universe multiverse" >> /etc/apt/sources.list
+RUN echo "deb [arch=armhf] http://ports.ubuntu.com/ xenial-backports main restricted universe multiverse" >> /etc/apt/sources.list
+
 RUN apt-get update
 RUN apt-get -y install libsodium-dev:armhf libsqlite3-dev:armhf libudev-dev:armhf libssl-dev:armhf libzmq3-dev:armhf
 RUN apt-get -y autoremove
 RUN apt-get -y clean
-#
-# RUN pip3 install fabric
-#
-# RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
-# RUN locale-gen
-# RUN update-locale LANG=en_US.UTF-8
-# RUN update-alternatives --set editor /usr/bin/vim.basic
-#
-# # rust
-# RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
-# RUN echo 'source $HOME/.cargo/env' >> $HOME/.bashrc
-# RUN /bin/bash -c "source $HOME/.cargo/env \
-#   && rustup override set nightly \
-#   && rustup target add armv7-unknown-linux-gnueabihf"
-# # https://github.com/rust-lang/rust/issues/50504#issuecomment-410550021
-# RUN echo 'export RUSTFLAGS="-Aproc-macro-derive-resolution-fallback"' >> $HOME/.bashrc
-# RUN /bin/bash -c "source $HOME/.cargo/env \
-#   && cargo install --force diesel_cli --no-default-features --features sqlite"
-#
-#
-# # deploy
-# RUN useradd -s /bin/zsh -m deploy
-# RUN passwd -l deploy
-# RUN echo 'deploy ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/101-deploy
-# RUN echo "deploy:hi" | chpasswd
 
+RUN pip3 install --upgrade pip
+RUN pip3 install fabric
+
+RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
+RUN locale-gen
+RUN update-locale LANG=en_US.UTF-8
+RUN update-alternatives --set editor /usr/bin/vim.basic
+
+# deploy
+RUN useradd -m deploy
+RUN passwd -l deploy
+USER deploy
+
+# nodejs
+RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | sh
+RUN bash -lc "nvm install node"
+
+# rust
+RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
+RUN bash -lc "rustup override set nightly"
+RUN bash -lc "rustup target add armv7-unknown-linux-gnueabihf"
+RUN bash -lc "cargo install diesel_cli --no-default-features --features sqlite"
+  
 VOLUME /workspace
 WORKDIR /workspace
 
