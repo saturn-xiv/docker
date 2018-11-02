@@ -24,7 +24,7 @@ RUN apt-get -y upgrade
 RUN apt-get -y install build-essential clang cmake pkg-config dh-autoreconf dh-make checkinstall \
   cpio meson intltool libtool gawk texinfo bison bc zsh moreutils tree \
   libncurses5-dev \
-  python3-pip \
+  python3-pip ansible ansible-lint \
   net-tools lsof iputils-ping dnsutils psmisc inotify-tools logrotate \
   zip unzip bsdtar telnet curl git vim pwgen sudo gperf \
   libsodium-dev libpq-dev libmysqlclient-dev libsqlite3-dev libudev-dev liboping-dev libzmq3-dev \
