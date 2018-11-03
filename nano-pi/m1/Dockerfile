@@ -1,19 +1,12 @@
 FROM ubuntu:xenial
 
-RUN echo '2018-11-01' >> /version
+RUN echo '2018-11-03' >> /version
 
 ENV DEBIAN_FRONTEND noninteractive
 
-# packages
-RUN apt-get update
-RUN apt-get -y install curl apt-utils apt-transport-https wget gnupg software-properties-common
-
-# RUN echo "deb [arch=amd64,i386] http://uk.archive.ubuntu.com/ubuntu/ xenial main universe" > /etc/apt/sources.list
-#
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
 RUN apt-get update
 RUN apt-get -y upgrade
-RUN apt-get -y install build-essential locales pkg-config dh-autoreconf \
+RUN apt-get -y install curl wget build-essential locales pkg-config dh-autoreconf \
   git vim nodejs python3-pip \
   gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf binutils-multiarch \
   libsqlite3-dev
