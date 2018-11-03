@@ -8,9 +8,9 @@ RUN echo '2018-11-03' >> /version
 ENV DEBIAN_FRONTEND noninteractive
 
 # packages
-RUN apt-get install -y apt-utils
 RUN dpkg --add-architecture armhf
 RUN apt-get update
+RUN apt-get -y install apt-utils
 RUN apt-get -y upgrade
 RUN apt-get -y install curl wget pwgen git vim \
   build-essential dh-autoreconf locales pkg-config \
