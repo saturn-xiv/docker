@@ -63,7 +63,6 @@ RUN bash -lc "rustup override set nightly"
 RUN bash -lc "rustup target add armv7-unknown-linux-gnueabihf"
 RUN bash -lc "cargo install diesel_cli --no-default-features --features sqlite"
 
-VOLUME /workspace
-WORKDIR /workspace
+VOLUME /workspace /home/deploy/.ssh
 
-CMD ["/bin/bash"]
+CMD ["/bin/sh", "-l"]
