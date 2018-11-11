@@ -1,6 +1,6 @@
 FROM ubuntu:latest
 
-RUN echo '2018-11-02' >> /version
+RUN echo '2018-11-11' >> /version
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -26,6 +26,7 @@ RUN apt-get -y install build-essential clang cmake pkg-config dh-autoreconf dh-m
   libncurses5-dev \
   ansible ansible-lint \
   net-tools lsof iputils-ping dnsutils psmisc inotify-tools logrotate \
+  musl musl-dev musl-tools llvm \
   zip unzip bsdtar telnet curl git vim pwgen sudo gperf \
   libsodium-dev libpq-dev libmysqlclient-dev libsqlite3-dev libudev-dev liboping-dev libzmq3-dev \
   libssl-dev libreadline-dev zlib1g-dev oracle-java8-installer \
