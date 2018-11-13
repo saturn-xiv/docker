@@ -22,7 +22,7 @@ RUN echo "deb https://artifacts.elastic.co/packages/6.x/apt stable main" > /etc/
 RUN apt-get update
 RUN apt-get -y upgrade
 RUN apt-get -y install build-essential clang cmake pkg-config dh-autoreconf dh-make checkinstall \
-  cpio meson intltool libtool gawk texinfo bison bc zsh moreutils tree \
+  cpio meson intltool libtool gawk texinfo bison bc zsh moreutils tree tzdata \
   libncurses5-dev \
   ansible ansible-lint \
   net-tools lsof iputils-ping dnsutils psmisc inotify-tools logrotate \

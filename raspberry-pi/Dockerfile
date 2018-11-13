@@ -3,7 +3,7 @@
 
 FROM debian:stretch
 
-RUN echo '2018-11-03' >> /version
+RUN echo '2018-11-12' >> /version
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -12,26 +12,26 @@ RUN dpkg --add-architecture armhf
 RUN apt-get update
 RUN apt-get -y install apt-utils
 RUN apt-get -y upgrade
-RUN apt-get -y install curl wget pwgen git vim \
+RUN apt-get -y install curl wget pwgen git vim tzdata sudo \
   build-essential dh-autoreconf locales pkg-config \
-  python3-pip \
-  libsqlite3-dev libzmq3-dev \
+  python python-pip \
   gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf binutils-multiarch \
-  libsodium-dev:armhf libsqlite3-dev:armhf libudev-dev:armhf libssl-dev:armhf
+  libsodium-dev:armhf libsqlite3-dev:armhf libudev-dev:armhf libssl-dev:armhf libzmq3-dev:armhf liboping-dev:armhf
 RUN apt-get -y autoremove
 RUN apt-get -y clean
-
-RUN pip3 install pip
-RUN pip3 install fabric
 
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
 RUN locale-gen
 RUN update-locale LANG=en_US.UTF-8
 RUN update-alternatives --set editor /usr/bin/vim.basic
 
+RUN pip install --upgrade pip
+RUN pip install ansible
+
 # deploy
 RUN useradd -m deploy
 RUN passwd -l deploy
+RUN echo 'deploy ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/101-deploy
 USER deploy
 
 # nodejs
@@ -42,8 +42,8 @@ RUN bash -lc "nvm install node"
 RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
 RUN bash -lc "rustup override set nightly"
 RUN bash -lc "rustup target add armv7-unknown-linux-gnueabihf"
-RUN bash -lc "cargo install diesel_cli --no-default-features --features sqlite"
 
 VOLUME /workspace /home/deploy/.ssh
+WORKDIR /workspace
 
 CMD ["/bin/sh", "-l"]
