@@ -1,6 +1,6 @@
 FROM ubuntu:xenial
 
-RUN echo '2018-11-11' >> /version
+RUN echo '2018-11-13' >> /version
 
 ENV DEBIAN_FRONTEND noninteractive
 
