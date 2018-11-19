@@ -1,6 +1,6 @@
 FROM ubuntu:xenial
 
-RUN echo '2018-11-13' >> /version
+RUN echo '2018-11-19' >> /version
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -59,8 +59,7 @@ RUN zsh -c "source $HOME/.zshrc \
 # rust
 RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
 RUN echo 'source $HOME/.cargo/env' >> $HOME/.zshrc
-RUN zsh -c "source $HOME/.zshrc \
-  && rustup override set nightly \
+RUN zsh -c "source $HOME/.zshrc \  
   && rustup target add armv7-unknown-linux-gnueabihf"
 
 VOLUME /workspace /home/deploy/.ssh

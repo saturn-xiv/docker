@@ -1,6 +1,6 @@
 FROM ubuntu:latest
 
-RUN echo '2018-11-11' >> /version
+RUN echo '2018-11-19' >> /version
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -103,12 +103,8 @@ RUN zsh -c "source $HOME/.zshrc \
 # rust
 RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
 RUN echo 'source $HOME/.cargo/env' >> $HOME/.zshrc
-# https://github.com/rust-lang/rust/issues/50504#issuecomment-410550021
-RUN echo 'export RUSTFLAGS="-Aproc-macro-derive-resolution-fallback"' >> $HOME/.zshrc
 RUN zsh -c "source $HOME/.zshrc \
-  && rustup override set nightly \
-  && rustup component add --toolchain nightly rls-preview rust-analysis rust-src rustfmt-preview \
-  && cargo install diesel_cli"
+  && rustup component add rls-preview rust-analysis rust-src rustfmt-preview"
 
 # setup
 USER root
