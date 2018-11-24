@@ -1,11 +1,13 @@
 FROM ubuntu:latest
 
-RUN echo '2018-11-19' >> /version
+RUN echo '2018-11-24' >> /version
 
 ENV DEBIAN_FRONTEND noninteractive
 
 # packages
 RUN apt-get update
+RUN apt-get -y install apt-utils
+RUN apt-get -y upgrade
 RUN apt-get -y install apt-utils apt-transport-https wget gnupg software-properties-common
 RUN add-apt-repository -y ppa:webupd8team/java
 RUN echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | debconf-set-selections
@@ -20,7 +22,6 @@ RUN apt-key add GPG-KEY-elasticsearch
 RUN echo "deb https://artifacts.elastic.co/packages/6.x/apt stable main" > /etc/apt/sources.list.d/elasticsearch.list
 
 RUN apt-get update
-RUN apt-get -y upgrade
 RUN apt-get -y install build-essential clang cmake pkg-config dh-autoreconf dh-make checkinstall \
   cpio meson intltool libtool gawk texinfo bison bc zsh moreutils tree tzdata \
   libncurses5-dev \
@@ -61,6 +62,8 @@ RUN useradd -s /bin/zsh -m deploy
 RUN passwd -l deploy
 RUN echo 'deploy ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/101-deploy
 RUN echo "deploy:hi" | chpasswd
+RUN mkdir /opt/saturn-xiv
+RUN chown deploy:deploy /opt/saturn-xiv
 USER deploy
 
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" || true
@@ -80,7 +83,7 @@ RUN tar xf $HOME/downloads/buildroot-$BUILDROOT_VERSION.tar.bz2 -C $HOME/local/b
 RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | zsh
 RUN zsh -c "source $HOME/.zshrc \
   && nvm install node \
-  && npm install -g grunt-cli"
+  && npm install -g grunt-cli serve umi"
 
 RUN curl -s "https://get.sdkman.io" | zsh
 RUN sed -i -e 's/sdkman_auto_answer=false/sdkman_auto_answer=true/g' $HOME/.sdkman/etc/config
@@ -106,12 +109,21 @@ RUN echo 'source $HOME/.cargo/env' >> $HOME/.zshrc
 RUN zsh -c "source $HOME/.zshrc \
   && rustup component add rls-preview rust-analysis rust-src rustfmt-preview"
 
+# saturn-xiv
+RUN zsh -c "source $HOME/.zshrc \
+  && git clone https://github.com/saturn-xiv/lotus.git /opt/saturn-xiv/lotus \
+  && cd /opt/saturn-xiv/lotus \
+  && cargo build --release \
+  && cd dashboard \
+  && npm install \
+  && umi build"
+
 # setup
 USER root
 
 COPY supervisord.conf /etc/supervisord.conf
 
-EXPOSE 3000/tcp 8080/tcp 22/tcp 3306/tcp 5432/tcp 6379/tcp 9200/tcp 5672/tcp 15672/tcp 10000-11000/tcp
+EXPOSE 3000/tcp 8080/tcp 22/tcp
 
 VOLUME /workspace /home/deploy/.ssh
 
