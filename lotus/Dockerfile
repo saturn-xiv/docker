@@ -1,12 +1,11 @@
 FROM ubuntu:latest
 
-RUN echo '2018-11-24' >> /version
+RUN echo '2018-11-30' >> /version
 
 ENV DEBIAN_FRONTEND noninteractive
 
 # packages
 RUN apt-get update
-RUN apt-get -y install apt-utils
 RUN apt-get -y upgrade
 RUN apt-get -y install apt-utils apt-transport-https wget gnupg software-properties-common
 RUN add-apt-repository -y ppa:webupd8team/java
@@ -107,16 +106,12 @@ RUN zsh -c "source $HOME/.zshrc \
 RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
 RUN echo 'source $HOME/.cargo/env' >> $HOME/.zshrc
 RUN zsh -c "source $HOME/.zshrc \
+  && rustup default nightly \
   && rustup component add rls-preview rust-analysis rust-src rustfmt-preview"
 
 # saturn-xiv
 RUN zsh -c "source $HOME/.zshrc \
-  && git clone https://github.com/saturn-xiv/lotus.git /opt/saturn-xiv/lotus \
-  && cd /opt/saturn-xiv/lotus \
-  && cargo build --release \
-  && cd dashboard \
-  && npm install \
-  && umi build"
+  && git clone https://github.com/saturn-xiv/lotus.git /opt/saturn-xiv/lotus"
 
 # setup
 USER root

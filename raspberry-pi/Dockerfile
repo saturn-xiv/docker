@@ -3,7 +3,7 @@
 
 FROM debian:stretch
 
-RUN echo '2018-11-19' >> /version
+RUN echo '2018-11-30' >> /version
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -40,6 +40,7 @@ RUN bash -lc "nvm install node"
 
 # rust
 RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
+RUN bash -lc "rustup default nightly"
 RUN bash -lc "rustup target add armv7-unknown-linux-gnueabihf"
 
 VOLUME /workspace /home/deploy/.ssh

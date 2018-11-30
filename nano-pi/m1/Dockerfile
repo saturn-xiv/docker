@@ -1,6 +1,6 @@
 FROM ubuntu:xenial
 
-RUN echo '2018-11-19' >> /version
+RUN echo '2018-11-30' >> /version
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -48,21 +48,17 @@ RUN passwd -l deploy
 RUN echo 'deploy ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/101-deploy
 USER deploy
 
-# on-my-zsh
-RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" || true
-
 # nodejs
-RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | zsh
-RUN zsh -c "source $HOME/.zshrc \
-  && nvm install node"
+RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | sh
+RUN bash -lc "nvm install node"
 
 # rust
 RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
-RUN echo 'source $HOME/.cargo/env' >> $HOME/.zshrc
-RUN zsh -c "source $HOME/.zshrc \  
-  && rustup target add armv7-unknown-linux-gnueabihf"
+RUN bash -lc "rustup default nightly"
+RUN bash -lc "rustup target add armv7-unknown-linux-gnueabihf"
 
 VOLUME /workspace /home/deploy/.ssh
 
 WORKDIR /workspace
-CMD ["/bin/zsh"]
+
+CMD ["/bin/sh", "-l"]
