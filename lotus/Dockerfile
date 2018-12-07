@@ -1,6 +1,6 @@
 FROM ubuntu:latest
 
-RUN echo '2018-11-30' >> /version
+RUN echo '2018-12-07' >> /version
 
 ENV DEBIAN_FRONTEND noninteractive
 
