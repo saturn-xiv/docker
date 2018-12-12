@@ -1,9 +1,10 @@
 # https://wiki.debian.org/CrossCompiling
+# https://wiki.debian.org/CrossToolchains
 # https://wiki.debian.org/Multiarch/HOWTO
 
 FROM debian:stretch
 
-RUN echo '2018-12-07' >> /version
+RUN echo '2018-12-12' >> /version
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -15,7 +16,7 @@ RUN apt-get -y upgrade
 RUN apt-get -y install curl wget pwgen git vim tzdata sudo zsh \
   build-essential dh-autoreconf locales pkg-config \
   python python-pip \
-  gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf binutils-multiarch \
+  gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf binutils-multiarch crossbuild-essential-armhf \
   libsodium-dev:armhf libsqlite3-dev:armhf libudev-dev:armhf libssl-dev:armhf libzmq3-dev:armhf liboping-dev:armhf
 RUN apt-get -y autoremove
 RUN apt-get -y clean
