@@ -4,7 +4,7 @@
 
 FROM debian:stretch
 
-RUN echo '2018-12-12' >> /version
+RUN echo '2018-12-13' >> /version
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -17,6 +17,7 @@ RUN apt-get -y install curl wget pwgen git vim tzdata sudo zsh \
   build-essential dh-autoreconf locales pkg-config \
   python python-pip \
   gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf binutils-multiarch crossbuild-essential-armhf \
+  libsodium-dev libsqlite3-dev libudev-dev libssl-dev libzmq3-dev liboping-dev \
   libsodium-dev:armhf libsqlite3-dev:armhf libudev-dev:armhf libssl-dev:armhf libzmq3-dev:armhf liboping-dev:armhf
 RUN apt-get -y autoremove
 RUN apt-get -y clean
