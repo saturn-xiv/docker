@@ -1,6 +1,6 @@
 FROM ubuntu:latest
 
-RUN echo '2018-12-07' >> /version
+RUN echo '2018-12-21' >> /version
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -107,7 +107,7 @@ RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
 RUN echo 'source $HOME/.cargo/env' >> $HOME/.zshrc
 RUN zsh -c "source $HOME/.zshrc \
   && rustup default nightly \
-  && rustup component add rls-preview rust-analysis rust-src rustfmt-preview"
+  && rustup component add rls-preview rust-analysis rust-src rustfmt clippy"
 
 # saturn-xiv
 RUN zsh -c "source $HOME/.zshrc \
