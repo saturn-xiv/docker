@@ -113,13 +113,13 @@ RUN echo 'export RUSTFLAGS="-Aproc-macro-derive-resolution-fallback"' >> $HOME/.
 
 # saturn-xiv
 RUN zsh -c "source $HOME/.zshrc \
-  && git clone https://github.com/saturn-xiv/lotus.git /opt/saturn-xiv/lotus
-  && cd /opt/saturn-xiv/lotus
-  && cargo check
-  && cargo build
-  && cargo build --release
-  && npm install
-  && cd dashboard
+  && git clone https://github.com/saturn-xiv/lotus.git /opt/saturn-xiv/lotus \
+  && cd /opt/saturn-xiv/lotus \
+  && cargo check \
+  && cargo build \
+  && cargo build --release \
+  && npm install \
+  && cd dashboard \
   && npm install"
 
 # setup
