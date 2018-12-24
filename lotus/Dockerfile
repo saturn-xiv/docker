@@ -1,6 +1,6 @@
 FROM ubuntu:latest
 
-RUN echo '2018-12-21' >> /version
+RUN echo '2018-12-24' >> /version
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -108,10 +108,19 @@ RUN echo 'source $HOME/.cargo/env' >> $HOME/.zshrc
 RUN zsh -c "source $HOME/.zshrc \
   && rustup default nightly \
   && rustup component add rls-preview rust-analysis rust-src rustfmt clippy"
+# https://github.com/rust-lang/rust/issues/50504#issuecomment-410550021
+RUN echo 'export RUSTFLAGS="-Aproc-macro-derive-resolution-fallback"' >> $HOME/.zshrc
 
 # saturn-xiv
 RUN zsh -c "source $HOME/.zshrc \
-  && git clone https://github.com/saturn-xiv/lotus.git /opt/saturn-xiv/lotus"
+  && git clone https://github.com/saturn-xiv/lotus.git /opt/saturn-xiv/lotus
+  && cd /opt/saturn-xiv/lotus
+  && cargo check
+  && cargo build
+  && cargo build --release
+  && npm install
+  && cd dashboard
+  && npm install"
 
 # setup
 USER root
