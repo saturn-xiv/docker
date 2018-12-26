@@ -1,6 +1,6 @@
 FROM ubuntu:latest
 
-RUN echo '2018-12-24' >> /version
+RUN echo '2018-12-25' >> /version
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -113,14 +113,7 @@ RUN echo 'export RUSTFLAGS="-Aproc-macro-derive-resolution-fallback"' >> $HOME/.
 
 # saturn-xiv
 RUN zsh -c "source $HOME/.zshrc \
-  && git clone https://github.com/saturn-xiv/lotus.git /opt/saturn-xiv/lotus \
-  && cd /opt/saturn-xiv/lotus \
-  && cargo check \
-  && cargo build \
-  && cargo build --release \
-  && npm install \
-  && cd dashboard \
-  && npm install"
+  && git clone https://github.com/saturn-xiv/lotus.git /opt/saturn-xiv/lotus"
 
 # setup
 USER root
