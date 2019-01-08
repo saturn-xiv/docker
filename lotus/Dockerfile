@@ -1,6 +1,6 @@
 FROM ubuntu:latest
 
-RUN echo '2018-12-25' >> /version
+RUN echo '2019-01-08' >> /version
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -91,14 +91,15 @@ RUN zsh -c "source $HOME/.zshrc \
   && sdk install maven \
   && sdk install gradle"
 
+ENV RUBY_VERSION ""
 RUN git clone https://github.com/sstephenson/rbenv.git $HOME/.rbenv
 RUN git clone https://github.com/sstephenson/ruby-build.git $HOME/.rbenv/plugins/ruby-build
 RUN git clone https://github.com/rbenv/rbenv-vars.git $HOME/.rbenv/plugins/rbenv-vars
 RUN echo 'export PATH=$HOME/.rbenv/bin:$PATH' >> $HOME/.zshrc
 RUN echo 'eval "$(rbenv init -)"' >> $HOME/.zshrc
 RUN zsh -c "source $HOME/.zshrc \
-  && rbenv install 2.5.1 \
-  && rbenv global 2.5.1 \
+  && rbenv install 2.6.0 \
+  && rbenv global 2.6.0 \
   && gem install bundler \
   && gem install rubocop"
 
