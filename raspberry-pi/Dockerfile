@@ -4,7 +4,7 @@
 
 FROM debian:stretch
 
-RUN echo '2018-12-13' >> /version
+RUN echo '2019-01-30' >> /version
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -15,7 +15,7 @@ RUN apt-get -y install apt-utils
 RUN apt-get -y upgrade
 RUN apt-get -y install curl wget pwgen git vim tzdata sudo zsh \
   build-essential dh-autoreconf locales pkg-config \
-  python python-pip \
+  python3 python3-pip \
   gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf binutils-multiarch crossbuild-essential-armhf \
   libsodium-dev libsqlite3-dev libudev-dev libssl-dev libzmq3-dev liboping-dev \
   libsodium-dev:armhf libsqlite3-dev:armhf libudev-dev:armhf libssl-dev:armhf libzmq3-dev:armhf liboping-dev:armhf
@@ -35,17 +35,17 @@ USER deploy
 
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" || true
 
-RUN pip install --upgrade --user pip
+RUN pip3 install --upgrade --user pip
 RUN echo 'export PATH=$HOME/.local/bin:$PATH' >> $HOME/.zshrc
 RUN zsh -c "source $HOME/.zshrc \
   && pip install --user ansible"
 
 # nodejs
-RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | zsh
+RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | zsh
 RUN zsh -c "source $HOME/.zshrc \
   && nvm install node"
 
-# rust
+# rust https://mexus.github.io/rustup-components-history/ 
 RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
 RUN echo 'source $HOME/.cargo/env' >> $HOME/.zshrc
 RUN zsh -c "source $HOME/.zshrc \
