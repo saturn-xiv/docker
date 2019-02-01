@@ -4,7 +4,7 @@
 
 FROM debian:stretch
 
-RUN echo '2019-01-30' >> /version
+RUN echo '2019-02-01' >> /version
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -48,8 +48,9 @@ RUN zsh -c "source $HOME/.zshrc \
 # rust https://mexus.github.io/rustup-components-history/ 
 RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
 RUN echo 'source $HOME/.cargo/env' >> $HOME/.zshrc
+# https://github.com/rust-lang/rust/issues/57947
 RUN zsh -c "source $HOME/.zshrc \
-  && rustup default nightly \
+  && rustup default nightly-2019-01-26 \
   && rustup target add armv7-unknown-linux-gnueabihf"
 
 VOLUME /workspace /home/deploy/.ssh
