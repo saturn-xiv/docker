@@ -56,7 +56,8 @@ RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
 # https://github.com/rust-lang/rust/issues/57947
 RUN sh -c ". $HOME/.profile \
   && rustup default nightly-2019-01-26 \
-  && rustup target add armv7-unknown-linux-gnueabihf"
+  && rustup target add armv7-unknown-linux-gnueabihf \
+  && cargo install cargo-deb"
 
 VOLUME /workspace
 WORKDIR /workspace
