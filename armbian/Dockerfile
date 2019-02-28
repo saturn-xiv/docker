@@ -54,8 +54,9 @@ RUN sh -c ". $HOME/.profile \
 # https://mexus.github.io/rustup-components-history/ 
 RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
 # https://github.com/rust-lang/rust/issues/57947
+# https://github.com/rust-lang/rust/issues/57464
 RUN sh -c ". $HOME/.profile \
-  && rustup default nightly-2019-01-26 \
+  && rustup default nightly-2019-01-02 \
   && rustup target add armv7-unknown-linux-gnueabihf \
   && cargo install cargo-deb"
 
