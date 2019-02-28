@@ -1,6 +1,6 @@
 FROM ubuntu:bionic
 
-RUN echo '2019-02-13' >> /version
+RUN echo '2019-01-27' >> /version
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV UBUNTU bionic
