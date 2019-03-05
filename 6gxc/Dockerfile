@@ -5,7 +5,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt update
 RUN apt -y upgrade
 RUN apt -y install vim sudo locales \
-  build-essential python cpio unzip rsync bc wget \
+  build-essential python cpio unzip rsync bc wget curl \
   libncurses5-dev git \
   lzop
 RUN apt -y autoremove
@@ -43,12 +43,18 @@ ARG BUILDROOT_VERSION="2018.11.3"
 RUN wget -P $HOME/downloads https://buildroot.org/downloads/buildroot-$BUILDROOT_VERSION.tar.bz2
 RUN tar xf $HOME/downloads/buildroot-$BUILDROOT_VERSION.tar.bz2 -C $HOME/local/
 
+RUN mkdir  $HOME/build
+
+# python
+ARG PYTHON "3.7.2"
+RUN wget -P $HOME/downloads https://www.python.org/ftp/python/$PYTHON/Python-$PYTHON.tgz
+RUN tar xf $HOME/downloads/Python-$PYTHON.tgz -C $HOME/build/
+
 # zlg
 ADD packages /opt/packages
 RUN tar xf /opt/packages/qt-m6g2c.tar.bz2 -C /opt
 RUN tar xf /opt/packages/tslib.tar.bz2 -C /opt
 RUN tar xf /opt/packages/gcc-linaro-arm-linux-gnueabihf-4.9-2014.9_linux.tar.bz2 -C $HOME/local/
-RUN mkdir  $HOME/build
 RUN tar xf /opt/packages/uboot-src-d09434a.tar.gz -C $HOME/build
 RUN tar xf /opt/packages/linux-src-a0722e0.tar.gz -C $HOME/build
 ADD zlg $HOME/local/zlg
