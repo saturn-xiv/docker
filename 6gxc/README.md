@@ -1,7 +1,7 @@
 Form ZLG(EPC_IoT_M6GxC_A6GxC-V1.05.00)
 ---
 
-## build for yourself toolchain
+### build for yourself toolchain
 
 ```bash
 $ docker build -t 6g2c .
@@ -14,7 +14,11 @@ $ docker run --rm -it -v `pwd`:/workspace 6gxc:latest
 > make linux-menuconfig
 ```
 
-## Using
+### Using official toolchain
+
+```bash
+> source $HOME/local/zlg
+```
 
 ### Build u-boot
 
