@@ -46,7 +46,7 @@ RUN tar xf $HOME/downloads/buildroot-$BUILDROOT_VERSION.tar.bz2 -C $HOME/local/
 RUN mkdir  $HOME/build
 
 # python
-ARG PYTHON "3.7.2"
+ARG PYTHON="3.7.2"
 RUN wget -P $HOME/downloads https://www.python.org/ftp/python/$PYTHON/Python-$PYTHON.tgz
 RUN tar xf $HOME/downloads/Python-$PYTHON.tgz -C $HOME/build/
 
@@ -58,6 +58,10 @@ RUN tar xf /opt/packages/gcc-linaro-arm-linux-gnueabihf-4.9-2014.9_linux.tar.bz2
 RUN tar xf /opt/packages/uboot-src-d09434a.tar.gz -C $HOME/build
 RUN tar xf /opt/packages/linux-src-a0722e0.tar.gz -C $HOME/build
 ADD zlg $HOME/local/zlg
+
+RUN sh -c ". $HOME/.profile \
+  && cd $HOME/build/Python-$PYTHON \
+  && ./configure CC=arm-linux-gnueabihf-gcc CXX=arm-gnueabihf-linux-g++ AR=arm-gnueabihf-linux-ar RANLIB=arm-gnueabihf-linux-ranlib --host=arm-gnueabihf-linux --build=arm --disable-ipv6 ac_cv_file__dev_ptmx=no ac_cv_file__dev_ptc=no --prefix=$HOME/local/python"
 
 VOLUME /workspace
 WORKDIR /workspace
