@@ -7,11 +7,9 @@ RUN apt -y upgrade
 RUN apt -y install vim sudo locales \
   build-essential git python cpio unzip rsync bc wget curl mtd-utils lzop \
   libncurses5-dev 
-# https://devguide.python.org/setup/  
-# RUN apt -y build-dep python3
-# RUN dpkg --add-architecture i386
-# RUN apt update
-# RUN apt -y install libc6:i386 libstdc++6:i386 zlib1g:i386
+RUN dpkg --add-architecture i386
+RUN apt update
+RUN apt -y install libc6:i386 libstdc++6:i386 zlib1g:i386
 RUN apt -y autoremove
 RUN apt -y clean
 
@@ -38,43 +36,29 @@ RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
 # https://github.com/rust-lang/rust/issues/57464
 RUN sh -c ". $HOME/.profile \
   && rustup default nightly-2019-01-02 \
-  && rustup target add arm-unknown-linux-gnueabihf \
-  && rustup target add arm-unknown-linux-musleabihf"
-
+  && rustup target add arm-unknown-linux-gnueabihf"
+  
 RUN mkdir -p $HOME/local $HOME/build
 
 # musl.cc
 RUN wget -P $HOME/downloads https://musl.cc/arm-linux-musleabihf-cross.tgz
 RUN tar xf $HOME/downloads/arm-linux-musleabihf-cross.tgz -C $HOME/local/
 
-# buildroot
-ARG BUILDROOT_VERSION="2018.11.3"
-RUN wget -P $HOME/downloads https://buildroot.org/downloads/buildroot-$BUILDROOT_VERSION.tar.bz2
-RUN tar xf $HOME/downloads/buildroot-$BUILDROOT_VERSION.tar.bz2 -C $HOME/build/
-
-# python
-# ARG PYTHON="3.6.7"
-# RUN wget -P $HOME/downloads https://www.python.org/ftp/python/$PYTHON/Python-$PYTHON.tgz
-# RUN tar xf $HOME/downloads/Python-$PYTHON.tgz -C $HOME/build/
-
 # zlg
 ADD packages /opt/zlg
 RUN sudo tar xf /opt/zlg/qt-m6g2c.tar.bz2 -C /opt
 RUN sudo tar xf /opt/zlg/tslib.tar.bz2 -C /opt
 RUN tar xf /opt/zlg/gcc-linaro-arm-linux-gnueabihf-4.9-2014.09_linux.tar.bz2 -C $HOME/local/
-# RUN tar xf /opt/zlg/uboot-src-d09434a.tar.gz -C $HOME/build
-# RUN git clone http://git.denx.de/u-boot.git $HOME/build/uboot
-# RUN cd $HOME/build/uboot && git checkout d09434a
 RUN tar xf /opt/zlg/linux-src-5ee9e45.tar.gz -C $HOME/build
+RUN echo 'export PATH=$HOME/local/gcc-linaro-arm-linux-gnueabihf-4.9-2014.09_linux/bin:$PATH' >> $HOME/.profile
 
-# RUN sh -c ". /opt/zlg/env \
-#   && cd $HOME/build/Python-$PYTHON \
-#   && ./configure --host=arm-linux-gnueabihf --build=arm --enable-optimizations --disable-ipv6 ac_cv_file__dev_ptmx=no ac_cv_file__dev_ptc=no --prefix=/opt/python \
-#   && make \
-#   && sudo make install"
-
-COPY config /home/deploy/buildroot-$BUILDROOT_VERSION/.config
+# buildroot
+ARG BUILDROOT_VERSION="2018.11.3"
+RUN wget -P $HOME/downloads https://buildroot.org/downloads/buildroot-$BUILDROOT_VERSION.tar.bz2
+RUN tar xf $HOME/downloads/buildroot-$BUILDROOT_VERSION.tar.bz2 -C $HOME/build/
+COPY .config /home/deploy/buildroot-$BUILDROOT_VERSION/.config
 COPY busybox.config /home/deploy/buildroot-$BUILDROOT_VERSION/package/busybox/busybox.config
+RUN cd $HOME/build/buildroot-$BUILDROOT_VERSION && make source
 
 VOLUME /workspace
 WORKDIR /workspace
