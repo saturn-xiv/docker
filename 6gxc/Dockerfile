@@ -6,7 +6,8 @@ RUN apt update
 RUN apt -y upgrade
 RUN apt -y install vim sudo locales \
   build-essential git python cpio unzip rsync bc wget curl mtd-utils lzop \
-  libncurses5-dev
+  libncurses5-dev \
+  python3
   
 RUN apt -y autoremove
 RUN apt -y clean
@@ -46,10 +47,10 @@ RUN tar xf $HOME/downloads/arm-linux-musleabihf-cross.tgz -C $HOME/local/
 # buildroot
 ARG BUILDROOT_VERSION="2018.11.3"
 RUN wget -P $HOME/downloads https://buildroot.org/downloads/buildroot-$BUILDROOT_VERSION.tar.bz2
-RUN tar xf $HOME/downloads/buildroot-$BUILDROOT_VERSION.tar.bz2 -C $HOME/local/
+RUN tar xf $HOME/downloads/buildroot-$BUILDROOT_VERSION.tar.bz2 -C $HOME/build/
 
 # python
-ARG PYTHON="3.7.2"
+ARG PYTHON="3.6.7"
 RUN wget -P $HOME/downloads https://www.python.org/ftp/python/$PYTHON/Python-$PYTHON.tgz
 RUN tar xf $HOME/downloads/Python-$PYTHON.tgz -C $HOME/build/
 
@@ -65,7 +66,7 @@ RUN tar xf /opt/zlg/linux-src-5ee9e45.tar.gz -C $HOME/build
 
 RUN sh -c ". /opt/zlg/env \
   && cd $HOME/build/Python-$PYTHON \
-  && ./configure CC=arm-linux-gnueabihf-gcc CXX=arm-gnueabihf-linux-g++ AR=arm-gnueabihf-linux-ar RANLIB=arm-gnueabihf-linux-ranlib --host=arm-gnueabihf-linux --build=arm --disable-ipv6 ac_cv_file__dev_ptmx=no ac_cv_file__dev_ptc=no --prefix=/opt/python \
+  && ./configure CC=arm-linux-gnueabihf-gcc CXX=arm-linux-gnueabihf-g++ AR=arm-linux-gnueabihf-ar RANLIB=arm-linux-gnueabihf-ranlib --host=arm-linux-gnueabihf --build=arm --disable-ipv6 ac_cv_file__dev_ptmx=no ac_cv_file__dev_ptc=no --prefix=/opt/python \
   && make install"
 
 VOLUME /workspace

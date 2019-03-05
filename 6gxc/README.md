@@ -9,7 +9,7 @@ Form ZLG(EPC_IoT_M6GxC_A6GxC-V1.05.00)
 $ docker build -t 6gxc .
 # test
 $ docker run --rm -it -v `pwd`:/workspace 6gxc:latest
-> cd ~/local/buildroot-2018.11.3
+> cd ~/build/buildroot-2018.11.3
 > make menuconfig
 > make uboot-menuconfig
 > make busybox-menuconfig
