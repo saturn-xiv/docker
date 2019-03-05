@@ -38,7 +38,7 @@ RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
 RUN sh -c ". $HOME/.profile \
   && rustup default nightly-2019-01-02 \
   && rustup target add arm-unknown-linux-gnueabihf \
-  %% rustup target add arm-unknown-linux-musleabihf"
+  && rustup target add arm-unknown-linux-musleabihf"
   
 RUN mkdir -p $HOME/local $HOME/build
 
@@ -58,8 +58,8 @@ RUN echo 'export PATH=$HOME/local/gcc-linaro-arm-linux-gnueabihf-4.9-2014.09_lin
 ARG BUILDROOT_VERSION="2018.11.3"
 RUN wget -P $HOME/downloads https://buildroot.org/downloads/buildroot-$BUILDROOT_VERSION.tar.bz2
 RUN tar xf $HOME/downloads/buildroot-$BUILDROOT_VERSION.tar.bz2 -C $HOME/build/
-COPY .config /home/deploy/buildroot-$BUILDROOT_VERSION/.config
-COPY busybox.config /home/deploy/buildroot-$BUILDROOT_VERSION/package/busybox/busybox.config
+COPY .config /home/deploy/build/buildroot-$BUILDROOT_VERSION/.config
+COPY busybox.config /home/deploy/build/buildroot-$BUILDROOT_VERSION/package/busybox/busybox.config
 RUN cd $HOME/build/buildroot-$BUILDROOT_VERSION && make source
 
 VOLUME /workspace
