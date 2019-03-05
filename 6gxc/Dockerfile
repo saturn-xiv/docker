@@ -59,9 +59,8 @@ ARG BUILDROOT_VERSION="2018.11.3"
 RUN wget -P $HOME/downloads https://buildroot.org/downloads/buildroot-$BUILDROOT_VERSION.tar.bz2
 RUN tar xf $HOME/downloads/buildroot-$BUILDROOT_VERSION.tar.bz2 -C $HOME/build/
 COPY .config /home/deploy/build/buildroot-$BUILDROOT_VERSION/.config
-COPY busybox.config /home/deploy/build/buildroot-$BUILDROOT_VERSION/package/busybox/busybox.config
 RUN cd $HOME/build/buildroot-$BUILDROOT_VERSION && make source
-RUN make -j1 V=s
+RUN cd $HOME/build/buildroot-$BUILDROOT_VERSION && make -j1 V=s
 
 VOLUME /workspace
 WORKDIR /workspace
