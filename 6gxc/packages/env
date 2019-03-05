@@ -1,10 +1,5 @@
 #!/bin/sh
 
-CROSS_COMPILE=arm-linux-gnueabihf-
-CC=${CROSS_COMPILE}gcc 
-CXX=${CROSS_COMPILE}g++ 
-AR=${CROSS_COMPILE}ar 
-RANLIB=${CROSS_COMPILE}ranlib
 PATH=$HOME/local/gcc-linaro-arm-linux-gnueabihf-4.9-2014.09_linux/bin:$PATH
 
-export CROSS_COMPILE CC CXX AR RANLIB PATH
+export PATH

@@ -6,11 +6,12 @@ RUN apt update
 RUN apt -y upgrade
 RUN apt -y install vim sudo locales \
   build-essential git python cpio unzip rsync bc wget curl mtd-utils lzop \
-  libncurses5-dev \
-  python3
-RUN dpkg --add-architecture i386
-RUN apt update
-RUN apt -y install libc6:i386 libstdc++6:i386  
+  libncurses5-dev 
+# https://devguide.python.org/setup/  
+# RUN apt -y build-dep python3
+# RUN dpkg --add-architecture i386
+# RUN apt update
+# RUN apt -y install libc6:i386 libstdc++6:i386 zlib1g:i386
 RUN apt -y autoremove
 RUN apt -y clean
 
@@ -52,9 +53,9 @@ RUN wget -P $HOME/downloads https://buildroot.org/downloads/buildroot-$BUILDROOT
 RUN tar xf $HOME/downloads/buildroot-$BUILDROOT_VERSION.tar.bz2 -C $HOME/build/
 
 # python
-ARG PYTHON="3.6.7"
-RUN wget -P $HOME/downloads https://www.python.org/ftp/python/$PYTHON/Python-$PYTHON.tgz
-RUN tar xf $HOME/downloads/Python-$PYTHON.tgz -C $HOME/build/
+# ARG PYTHON="3.6.7"
+# RUN wget -P $HOME/downloads https://www.python.org/ftp/python/$PYTHON/Python-$PYTHON.tgz
+# RUN tar xf $HOME/downloads/Python-$PYTHON.tgz -C $HOME/build/
 
 # zlg
 ADD packages /opt/zlg
@@ -66,10 +67,14 @@ RUN tar xf /opt/zlg/gcc-linaro-arm-linux-gnueabihf-4.9-2014.09_linux.tar.bz2 -C 
 # RUN cd $HOME/build/uboot && git checkout d09434a
 RUN tar xf /opt/zlg/linux-src-5ee9e45.tar.gz -C $HOME/build
 
-RUN sh -c ". /opt/zlg/env \
-  && cd $HOME/build/Python-$PYTHON \
-  && ./configure --host=arm-linux-gnueabihf --build=arm --disable-ipv6 ac_cv_file__dev_ptmx=no ac_cv_file__dev_ptc=no --prefix=/opt/python \
-  && make install"
+# RUN sh -c ". /opt/zlg/env \
+#   && cd $HOME/build/Python-$PYTHON \
+#   && ./configure --host=arm-linux-gnueabihf --build=arm --enable-optimizations --disable-ipv6 ac_cv_file__dev_ptmx=no ac_cv_file__dev_ptc=no --prefix=/opt/python \
+#   && make \
+#   && sudo make install"
+
+COPY config /home/deploy/buildroot-$BUILDROOT_VERSION/.config
+COPY busybox.config /home/deploy/buildroot-$BUILDROOT_VERSION/package/busybox/busybox.config
 
 VOLUME /workspace
 WORKDIR /workspace

@@ -11,10 +11,10 @@ $ docker build -t 6gxc .
 $ docker run --rm -it -v `pwd`:/workspace 6gxc:latest
 > cd ~/build/buildroot-2018.11.3
 > make menuconfig
-> make uboot-menuconfig
 > make busybox-menuconfig
-> make linux-menuconfig
 ```
+
+will generate `output/images/rootfs.tar.bz2`
 
 ### Using official toolchain
 
@@ -53,6 +53,7 @@ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- epc_m6g2c_wifi_defconfig &&
 
 ```bash
 > cd ~/build/A7-linux-src
+> make kernelversion 
 > ./built-zImage.sh
 > tar zcvf kernel.tar.gz arch/arm/boot/zImage
 ```
@@ -61,11 +62,17 @@ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- epc_m6g2c_wifi_defconfig &&
 
 ### Build rootfs
 
+- rootfs-mx6g2c.tar.gz：for all M6G2C
+- rootfs-mx6g2c-wifi.tar.gz for A6G2C-W128LI/A6G2C-W256LI/A6G2C-WB128LI/A6G2C-WB256LI
+- rootfs-mx6g2c-5gwifi.tar.gz for A6G2C-5WB128LI
+- rootfs-mx6g2c-mifare.tar.gz for A6G2C-M128F128LI
+- rootfs-mx6g2c-zigbee.tar.gz for A6G2C-Z128F128LI
+
 ```bash
 > mkdir rootfs
-> sudo tar zxvf rootfs-m6g2c.tar.gz -C rootfs
+> sudo tar zxf /opt/zlg/rootfs-mx6g2c-wifi.tar.gz -C rootfs
 > sudo mkfs.ubifs -r rootfs -m 2KiB -e 124KiB -c 540 -o rootfs.ubifs.img
-> sudo tar zcvf rootfs.tar.gz *
+> sudo tar zcf rootfs.tar.gz *
 ```
 
 ### Document
