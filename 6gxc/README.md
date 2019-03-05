@@ -1,6 +1,8 @@
 Form ZLG(EPC_IoT_M6GxC_A6GxC-V1.05.00)
 ---
 
+![packages](packages.png)
+
 ### build for yourself toolchain
 
 ```bash
