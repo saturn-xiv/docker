@@ -26,7 +26,7 @@ USER deploy
 RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | sh
 RUN sh -c ". $HOME/.profile \
   && nvm install node"
-  
+
 # rust
 RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
 # https://mexus.github.io/rustup-components-history/ 
@@ -54,19 +54,18 @@ RUN wget -P $HOME/downloads https://www.python.org/ftp/python/$PYTHON/Python-$PY
 RUN tar xf $HOME/downloads/Python-$PYTHON.tgz -C $HOME/build/
 
 # zlg
-ADD packages /opt/packages
-RUN sudo tar xf /opt/packages/qt-m6g2c.tar.bz2 -C /opt
-RUN sudo tar xf /opt/packages/tslib.tar.bz2 -C /opt
-RUN tar xf /opt/packages/gcc-linaro-arm-linux-gnueabihf-4.9-2014.09_linux.tar.bz2 -C $HOME/local/
-# RUN tar xf /opt/packages/uboot-src-d09434a.tar.gz -C $HOME/build
+ADD packages /opt/zlg
+RUN sudo tar xf /opt/zlg/qt-m6g2c.tar.bz2 -C /opt
+RUN sudo tar xf /opt/zlg/tslib.tar.bz2 -C /opt
+RUN tar xf /opt/zlg/gcc-linaro-arm-linux-gnueabihf-4.9-2014.09_linux.tar.bz2 -C $HOME/local/
+# RUN tar xf /opt/zlg/uboot-src-d09434a.tar.gz -C $HOME/build
 # RUN git clone http://git.denx.de/u-boot.git $HOME/build/uboot
 # RUN cd $HOME/build/uboot && git checkout d09434a
-RUN tar xf /opt/packages/linux-src-5ee9e45.tar.gz -C $HOME/build
+RUN tar xf /opt/zlg/linux-src-5ee9e45.tar.gz -C $HOME/build
 
-COPY zlg $HOME/local/zlg
-RUN sh -c ". $HOME/local/zlg \
+RUN sh -c ". /opt/zlg/env \
   && cd $HOME/build/Python-$PYTHON \
-  && ./configure CC=arm-linux-gnueabihf-gcc CXX=arm-gnueabihf-linux-g++ AR=arm-gnueabihf-linux-ar RANLIB=arm-gnueabihf-linux-ranlib --host=arm-gnueabihf-linux --build=arm --disable-ipv6 ac_cv_file__dev_ptmx=no ac_cv_file__dev_ptc=no --prefix=$HOME/local/python \
+  && ./configure CC=arm-linux-gnueabihf-gcc CXX=arm-gnueabihf-linux-g++ AR=arm-gnueabihf-linux-ar RANLIB=arm-gnueabihf-linux-ranlib --host=arm-gnueabihf-linux --build=arm --disable-ipv6 ac_cv_file__dev_ptmx=no ac_cv_file__dev_ptc=no --prefix=/opt/python \
   && make install"
 
 VOLUME /workspace
