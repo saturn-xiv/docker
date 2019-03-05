@@ -12,6 +12,7 @@ $ docker run --rm -it -v `pwd`:/workspace 6gxc:latest
 > cd ~/build/buildroot-2018.11.3
 > make menuconfig
 > make busybox-menuconfig
+> make -j
 ```
 
 will generate `output/images/rootfs.tar.bz2`
