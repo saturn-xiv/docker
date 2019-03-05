@@ -8,7 +8,9 @@ RUN apt -y install vim sudo locales \
   build-essential git python cpio unzip rsync bc wget curl mtd-utils lzop \
   libncurses5-dev \
   python3
-  
+RUN dpkg --add-architecture i386
+RUN apt update
+RUN apt -y install libc6:i386 libstdc++6:i386  
 RUN apt -y autoremove
 RUN apt -y clean
 
