@@ -4,7 +4,7 @@ Form ZLG(EPC_IoT_M6GxC_A6GxC-V1.05.00)
 ### build for yourself toolchain
 
 ```bash
-$ docker build -t 6g2c .
+$ docker build -t 6gxc .
 # test
 $ docker run --rm -it -v `pwd`:/workspace 6gxc:latest
 > cd ~/local/buildroot-2018.11.3
@@ -60,7 +60,9 @@ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- epc_m6g2c_wifi_defconfig &&
 ### Build rootfs
 
 ```bash
-> cd /opt/rootfs
+> mkdir rootfs
+> sudo tar zxvf rootfs-m6g2c.tar.gz -C rootfs
+> sudo mkfs.ubifs -r rootfs -m 2KiB -e 124KiB -c 540 -o rootfs.ubifs.img
 > sudo tar zcvf rootfs.tar.gz *
 ```
 
