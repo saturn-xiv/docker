@@ -66,7 +66,7 @@ RUN tar xf /opt/zlg/linux-src-5ee9e45.tar.gz -C $HOME/build
 
 RUN sh -c ". /opt/zlg/env \
   && cd $HOME/build/Python-$PYTHON \
-  && ./configure CC=arm-linux-gnueabihf-gcc CXX=arm-linux-gnueabihf-g++ AR=arm-linux-gnueabihf-ar RANLIB=arm-linux-gnueabihf-ranlib --host=arm-linux-gnueabihf --build=arm --disable-ipv6 ac_cv_file__dev_ptmx=no ac_cv_file__dev_ptc=no --prefix=/opt/python \
+  && ./configure --host=arm-linux-gnueabihf --build=arm --disable-ipv6 ac_cv_file__dev_ptmx=no ac_cv_file__dev_ptc=no --prefix=/opt/python \
   && make install"
 
 VOLUME /workspace

@@ -1,3 +1,9 @@
 #!/bin/sh
 
-export PATH=$HOME/local/gcc-linaro-arm-linux-gnueabihf-4.9-2014.09_linux/bin:$PATH
+CC=arm-linux-gnueabihf-gcc 
+CXX=arm-linux-gnueabihf-g++ 
+AR=arm-linux-gnueabihf-ar 
+RANLIB=arm-linux-gnueabihf-ranlib
+PATH=$HOME/local/gcc-linaro-arm-linux-gnueabihf-4.9-2014.09_linux/bin:$PATH
+
+export CC CXX AR RANLIB PATH
