@@ -31,12 +31,14 @@ RUN sh -c ". $HOME/.profile \
 
 # rust
 RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
+# https://forge.rust-lang.org/platform-support.html
 # https://mexus.github.io/rustup-components-history/ 
 # https://github.com/rust-lang/rust/issues/57947
 # https://github.com/rust-lang/rust/issues/57464
 RUN sh -c ". $HOME/.profile \
   && rustup default nightly-2019-01-02 \
-  && rustup target add arm-unknown-linux-gnueabihf"
+  && rustup target add arm-unknown-linux-gnueabihf \
+  %% rustup target add arm-unknown-linux-musleabihf"
   
 RUN mkdir -p $HOME/local $HOME/build
 
