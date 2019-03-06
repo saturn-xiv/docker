@@ -6,7 +6,8 @@ RUN apt update
 RUN apt -y upgrade
 RUN apt -y install vim sudo locales \
   build-essential git python cpio unzip rsync bc wget curl mtd-utils lzop \
-  libncurses5-dev 
+  libncurses5-dev \
+  dh-autoreconf pkg-config
 RUN dpkg --add-architecture i386
 RUN apt update
 RUN apt -y install libc6:i386 libstdc++6:i386 zlib1g:i386
@@ -37,14 +38,14 @@ RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
 # https://github.com/rust-lang/rust/issues/57464
 RUN sh -c ". $HOME/.profile \
   && rustup default nightly-2019-01-02 \
-  && rustup target add arm-unknown-linux-gnueabihf \
-  && rustup target add arm-unknown-linux-musleabihf"
+  && rustup target add arm-unknown-linux-gnueabihf"
+  # && rustup target add arm-unknown-linux-musleabihf"
   
 RUN mkdir -p $HOME/local $HOME/build
 
 # musl.cc
-RUN wget -P $HOME/downloads https://musl.cc/arm-linux-musleabihf-cross.tgz
-RUN tar xf $HOME/downloads/arm-linux-musleabihf-cross.tgz -C $HOME/local/
+# RUN wget -P $HOME/downloads https://musl.cc/arm-linux-musleabihf-cross.tgz
+# RUN tar xf $HOME/downloads/arm-linux-musleabihf-cross.tgz -C $HOME/local/
 
 # zlg
 ADD packages /opt/zlg

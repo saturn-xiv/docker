@@ -23,6 +23,18 @@ will generate `output/images/rootfs.tar.bz2`
 > source $HOME/local/zlg
 ```
 
+### For rust
+
+```bash
+BUILDROOT="2018.11.3"
+SYSROOT=$HOME/build/buildroot-${BUILDROOT}/output/host/arm-buildroot-linux-gnueabihf/sysroot
+PKG_CONFIG_DIR=
+PKG_CONFIG_LIBDIR=${SYSROOT}/usr/lib/pkgconfig:${SYSROOT}/usr/share/pkgconfig
+PKG_CONFIG_SYSROOT_DIR=${SYSROOT}
+PKG_CONFIG_ALLOW_CROSS=1
+export SYSROOT PKG_CONFIG_DIR PKG_CONFIG_LIBDIR PKG_CONFIG_SYSROOT_DIR PKG_CONFIG_ALLOW_CROSS
+```
+
 ### Build u-boot
 
 #### config list
