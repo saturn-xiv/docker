@@ -36,13 +36,8 @@ RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
 RUN sh -c ". $HOME/.profile \
   && rustup default nightly-2019-01-02 \
   && rustup target add arm-unknown-linux-gnueabihf"
-  # && rustup target add arm-unknown-linux-musleabihf"
-  
+    
 RUN mkdir -p $HOME/local $HOME/build
-
-# musl.cc
-# RUN wget -P $HOME/downloads https://musl.cc/arm-linux-musleabihf-cross.tgz
-# RUN tar xf $HOME/downloads/arm-linux-musleabihf-cross.tgz -C $HOME/local/
 
 # zlg
 ADD packages /opt/zlg
@@ -56,7 +51,7 @@ RUN echo 'export PATH=$HOME/local/gcc-linaro-arm-linux-gnueabihf-4.9-2014.09_lin
 ARG BUILDROOT_VERSION="2018.11.3"
 RUN wget -P $HOME/downloads https://buildroot.org/downloads/buildroot-$BUILDROOT_VERSION.tar.bz2
 RUN tar xf $HOME/downloads/buildroot-$BUILDROOT_VERSION.tar.bz2 -C $HOME/build/
-COPY .config /home/deploy/build/buildroot-$BUILDROOT_VERSION/.config
+COPY .config /home/deploy/build/buildroot-$BUILDROOT_VERSION/
 RUN cd $HOME/build/buildroot-$BUILDROOT_VERSION && make source
 RUN cd $HOME/build/buildroot-$BUILDROOT_VERSION && make -j1 V=s
 
@@ -65,6 +60,9 @@ RUN sudo apt -y install dh-autoreconf pkg-config \
   libpq-dev libsqlite3-dev libsodium-dev libudev-dev libssl-dev libzmq3-dev liboping-dev
 RUN sudo apt -y autoremove
 RUN sudo apt -y clean
+
+COPY built-zImage.sh /home/deploy/build/A7-linux-src/
+COPY rust /home/deploy/local/
 
 VOLUME /workspace
 WORKDIR /workspace
