@@ -6,13 +6,10 @@ RUN apt update
 RUN apt -y upgrade
 RUN apt -y install vim sudo locales \
   build-essential git python cpio unzip rsync bc wget curl mtd-utils lzop \
-  libncurses5-dev \
-  dh-autoreconf pkg-config
+  libncurses5-dev  
 RUN dpkg --add-architecture i386
 RUN apt update
 RUN apt -y install libc6:i386 libstdc++6:i386 zlib1g:i386
-RUN apt -y autoremove
-RUN apt -y clean
 
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
 RUN locale-gen
@@ -62,6 +59,12 @@ RUN tar xf $HOME/downloads/buildroot-$BUILDROOT_VERSION.tar.bz2 -C $HOME/build/
 COPY .config /home/deploy/build/buildroot-$BUILDROOT_VERSION/.config
 RUN cd $HOME/build/buildroot-$BUILDROOT_VERSION && make source
 RUN cd $HOME/build/buildroot-$BUILDROOT_VERSION && make -j1 V=s
+
+# third dependices must after buildroot build
+RUN sudo apt -y install dh-autoreconf pkg-config \
+  libpq-dev libsqlite3-dev libsodium-dev libudev-dev libssl-dev libzmq3-dev liboping-dev
+RUN apt -y autoremove
+RUN apt -y clean
 
 VOLUME /workspace
 WORKDIR /workspace
