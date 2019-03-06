@@ -63,8 +63,8 @@ RUN cd $HOME/build/buildroot-$BUILDROOT_VERSION && make -j1 V=s
 # third dependices must after buildroot build
 RUN sudo apt -y install dh-autoreconf pkg-config \
   libpq-dev libsqlite3-dev libsodium-dev libudev-dev libssl-dev libzmq3-dev liboping-dev
-RUN apt -y autoremove
-RUN apt -y clean
+RUN sudo apt -y autoremove
+RUN sudo apt -y clean
 
 VOLUME /workspace
 WORKDIR /workspace
