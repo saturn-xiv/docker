@@ -63,10 +63,6 @@ RUN sudo apt -y clean
 
 COPY rust /home/deploy/local/
 
-# fix some linker
-RUN sudo ln -s /home/deploy/build/buildroot-$BUILDROOT_VERSION/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/lib /usr/lib/arm-linux-gnueabihf
-RUN sudo ln -s /home/deploy/build/buildroot-$BUILDROOT_VERSION/output/target/lib /lib/arm-linux-gnueabihf
-
 VOLUME /workspace
 WORKDIR /workspace
 
