@@ -45,7 +45,6 @@ RUN sudo tar xf /opt/zlg/qt-m6g2c.tar.bz2 -C /opt
 RUN sudo tar xf /opt/zlg/tslib.tar.bz2 -C /opt
 RUN tar xf /opt/zlg/gcc-linaro-arm-linux-gnueabihf-4.9-2014.09_linux.tar.bz2 -C $HOME/local/
 RUN tar xf /opt/zlg/linux-src-5ee9e45.tar.gz -C $HOME/build
-RUN echo 'export PATH=$HOME/local/gcc-linaro-arm-linux-gnueabihf-4.9-2014.09_linux/bin:$PATH' >> $HOME/.profile
 
 # buildroot
 ARG BUILDROOT_VERSION="2019.02"
@@ -57,11 +56,11 @@ RUN cd $HOME/build/buildroot-$BUILDROOT_VERSION && make -j1 V=s
 
 # third dependices must after buildroot build
 RUN sudo apt -y install dh-autoreconf pkg-config \
-  libpq-dev libsqlite3-dev libsodium-dev libudev-dev libssl-dev libzmq3-dev liboping-dev
+  libpq-dev libsqlite3-dev libsodium-dev libudev-dev libssl-dev libzmq3-dev liboping-dev zlib1g-dev
 RUN sudo apt -y autoremove
 RUN sudo apt -y clean
 
-COPY rust /home/deploy/local/
+COPY env /home/deploy/local/
 
 VOLUME /workspace
 WORKDIR /workspace

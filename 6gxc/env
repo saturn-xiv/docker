@@ -1,0 +1,24 @@
+#!/bin/sh
+
+BUILDROOT="2018.11.3"
+SYSROOT=$HOME/build/buildroot-${BUILDROOT}/output/host/arm-buildroot-linux-gnueabihf/sysroot
+PKG_CONFIG_DIR=
+PKG_CONFIG_LIBDIR=${SYSROOT}/usr/lib/pkgconfig:${SYSROOT}/usr/share/pkgconfig
+PKG_CONFIG_SYSROOT_DIR=${SYSROOT}
+PKG_CONFIG_ALLOW_CROSS=1
+
+export SYSROOT PKG_CONFIG_DIR PKG_CONFIG_LIBDIR PKG_CONFIG_SYSROOT_DIR PKG_CONFIG_ALLOW_CROSS
+
+LINARO=$HOME/local/gcc-linaro-arm-linux-gnueabihf-4.9-2014.09_linux/bin/arm-linux-gnueabihf
+CC=$LINARO-gcc
+CXX=$LINARO-g++
+AR=$LINARO-ar
+LD=$LINARO-ld
+RANLIB=$LINARO-ranlib
+STRIP=$LINARO-strip
+export LINARO CC CXX AR LD RANLIB STRIP
+
+CFLAGS="$CFLAGS -I ${SYSROOT}/usr/include"
+CXXFLAGS="${CFLAGS}"
+RUSTC_LINKER=$LINARO-gcc
+export CFLAGS CXXFLAGS RUSTC_LINKER
