@@ -48,7 +48,7 @@ RUN tar xf /opt/zlg/linux-src-5ee9e45.tar.gz -C $HOME/build
 RUN echo 'export PATH=$HOME/local/gcc-linaro-arm-linux-gnueabihf-4.9-2014.09_linux/bin:$PATH' >> $HOME/.profile
 
 # buildroot
-ARG BUILDROOT_VERSION="2018.11.3"
+ARG BUILDROOT_VERSION="2019.02"
 RUN wget -P $HOME/downloads https://buildroot.org/downloads/buildroot-$BUILDROOT_VERSION.tar.bz2
 RUN tar xf $HOME/downloads/buildroot-$BUILDROOT_VERSION.tar.bz2 -C $HOME/build/
 COPY .config /home/deploy/build/buildroot-$BUILDROOT_VERSION/
@@ -61,8 +61,11 @@ RUN sudo apt -y install dh-autoreconf pkg-config \
 RUN sudo apt -y autoremove
 RUN sudo apt -y clean
 
-COPY built-zImage.sh /home/deploy/build/A7-linux-src/
 COPY rust /home/deploy/local/
+
+# fix some linker
+RUN sudo ln -s /home/deploy/build/buildroot-$BUILDROOT_VERSION/output/host/arm-buildroot-linux-gnueabihf/sysroot/usr/lib /usr/lib/arm-linux-gnueabihf
+RUN sudo ln -s /home/deploy/build/buildroot-$BUILDROOT_VERSION/output/target/lib /lib/arm-linux-gnueabihf
 
 VOLUME /workspace
 WORKDIR /workspace

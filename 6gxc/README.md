@@ -3,24 +3,37 @@ Form ZLG(EPC_IoT_M6GxC_A6GxC-V1.05.00)
 
 ![packages](packages.png)
 
-### build for yourself toolchain
+### Start docker
+
+- Build by self
 
 ```bash
 $ docker build -t 6gxc .
 $ docker run --rm -it -v `pwd`:/workspace 6gxc:latest
-> cd ~/build/buildroot-2018.11.3
-> make menuconfig
+```
+
+- From `https://hub.docker.com`
+
+```bash
+$ docker run --rm -it -v `pwd`:/workspace chonglou/6gxc:latest
+```
+
+### build for yourself toolchain
+
+```bash
+> cd ~/build/buildroot-2019.02
+> make menuconfig 
 > make -j
 ```
 
-will generate `output/images/rootfs.tar.bz2`
+will generate `output/images/rootfs.tar.gz`, and run `tar zcvf kernel.tar.gz arch/arm/boot/zImage` to package 
 
 ### Build kernel 
 
 ```bash
 > cd ~/build/A7-linux-src
 > ./built-zImage.sh CHANGE-ME
-> tar zcvf kernel.tar.gz arch/arm/boot/zImage
+> 
 ```
 
 - dts file is in `arch/arm/boot/dts`
