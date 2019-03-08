@@ -1,6 +1,6 @@
 #!/bin/sh
 
-BUILDROOT="2018.11.3"
+BUILDROOT="2019.02"
 SYSROOT=$HOME/build/buildroot-${BUILDROOT}/output/host/arm-buildroot-linux-gnueabihf/sysroot
 PKG_CONFIG_DIR=
 PKG_CONFIG_LIBDIR=${SYSROOT}/usr/lib/pkgconfig:${SYSROOT}/usr/share/pkgconfig
@@ -18,7 +18,5 @@ RANLIB=$LINARO-ranlib
 STRIP=$LINARO-strip
 export LINARO CC CXX AR LD RANLIB STRIP
 
-CFLAGS="$CFLAGS -I ${SYSROOT}/usr/include"
-CXXFLAGS="${CFLAGS}"
 RUSTC_LINKER=$LINARO-gcc
-export CFLAGS CXXFLAGS RUSTC_LINKER
+export RUSTC_LINKER
