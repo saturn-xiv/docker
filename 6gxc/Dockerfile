@@ -51,17 +51,17 @@ ARG BUILDROOT_VERSION="2019.02"
 RUN wget -P $HOME/downloads https://buildroot.org/downloads/buildroot-$BUILDROOT_VERSION.tar.bz2
 RUN tar xf $HOME/downloads/buildroot-$BUILDROOT_VERSION.tar.bz2 -C $HOME/build/
 RUN cd $HOME/build/buildroot-$BUILDROOT_VERSION \
-  && make raspberrypi3_defconfig \
-  && make -j1 V=s
+  && make raspberrypi3_64_defconfig \
+  && make source
 RUN cd $HOME/build/buildroot-$BUILDROOT_VERSION \
   && make orangepi_zero_defconfig \
-  && make -j1 V=s
+  && make source
 RUN cd $HOME/build/buildroot-$BUILDROOT_VERSION \
   && make orangepi_one_defconfig \
-  && make -j1 V=s
+  && make source
 COPY .config /home/deploy/build/buildroot-$BUILDROOT_VERSION/
 RUN cd $HOME/build/buildroot-$BUILDROOT_VERSION && make source
-RUN cd $HOME/build/buildroot-$BUILDROOT_VERSION && make -j1 V=s
+# RUN cd $HOME/build/buildroot-$BUILDROOT_VERSION && make -j1 V=s
 
 # third dependices must after buildroot build
 RUN sudo apt -y install dh-autoreconf pkg-config \
