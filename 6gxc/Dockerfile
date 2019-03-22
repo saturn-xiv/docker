@@ -50,13 +50,13 @@ RUN tar xf /opt/zlg/linux-src-5ee9e45.tar.gz -C $HOME/build
 ARG BUILDROOT_VERSION="2019.02"
 RUN wget -P $HOME/downloads https://buildroot.org/downloads/buildroot-$BUILDROOT_VERSION.tar.bz2
 RUN tar xf $HOME/downloads/buildroot-$BUILDROOT_VERSION.tar.bz2 -C $HOME/build/
-RUN cd $HOME/build/buildroot-$BUILDROOT_VERSION \
+RUN cd $HOME/build/buildroot-$BUILDROOT_VERSION \  
   && make raspberrypi3_64_defconfig \
   && make source
-RUN cd $HOME/build/buildroot-$BUILDROOT_VERSION \
+RUN cd $HOME/build/buildroot-$BUILDROOT_VERSION \  
   && make orangepi_zero_defconfig \
   && make source
-RUN cd $HOME/build/buildroot-$BUILDROOT_VERSION \
+RUN cd $HOME/build/buildroot-$BUILDROOT_VERSION \  
   && make orangepi_one_defconfig \
   && make source
 COPY .config /home/deploy/build/buildroot-$BUILDROOT_VERSION/
@@ -71,7 +71,7 @@ RUN sudo apt -y clean
 
 COPY env /home/deploy/local/
 
-VOLUME /workspace
+VOLUME /workspace $HOME/build/buildroot-$BUILDROOT_VERSION/output
 WORKDIR /workspace
 
 CMD ["/bin/bash", "-l"]
