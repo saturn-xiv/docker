@@ -9,13 +9,13 @@ Form ZLG(EPC_IoT_M6GxC_A6GxC-V1.05.00)
 
 ```bash
 $ docker build -t 6gxc .
-$ docker run --rm -it -v `pwd`:/workspace 6gxc:latest
+$ docker run --rm -it -v `pwd`/workspace:/workspace -v `pwd`/output:/home/deploy/build/buildroot-2019.02/output 6gxc:latest
 ```
 
 - From `https://hub.docker.com`
 
 ```bash
-$ docker run --rm -it -v `pwd`:/workspace chonglou/6gxc:latest
+$ docker run --rm -it -v `pwd`/workspace:/workspace -v `pwd`/output:/home/deploy/build/buildroot-2019.02/output chonglou/6gxc:latest
 ```
 
 ### build for yourself toolchain
