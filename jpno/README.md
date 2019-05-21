@@ -8,14 +8,20 @@ Java+Python+NodeJs+OCCI
 - Build by self
 
 ```bash
+$ docker pull ubuntu:latest
 $ docker build -t jpno .
-$ docker run --rm -it -v `pwd`:/workspace jpno:latest
 ```
 
-## from hub
+### from hub
 
 ```bash
 $ docker pull chonglou/jpno:latest
+```
+
+### Run
+
+```bash
+$ docker run --rm -it -v `pwd`:/workspace jpno:latest
 ```
 
 ## Resources

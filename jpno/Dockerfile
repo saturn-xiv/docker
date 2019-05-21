@@ -23,7 +23,7 @@ RUN update-alternatives --set editor /usr/bin/vim.basic
 
 # oracle
 ARG ORACLE_VERSION="19.3.0.0.0dbru"
-ADD libs/instantclient-basic-linux.x64-$ORACLE_VERSION.zip /
+ADD tmp/instantclient-basic-linux.x64-$ORACLE_VERSION.zip /
 RUN unzip /instantclient-basic-linux.x64-$ORACLE_VERSION.zip -d /opt
 RUN echo /opt/instantclient_19_3 > /etc/ld.so.conf.d/oracle.conf
 
