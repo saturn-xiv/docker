@@ -28,7 +28,8 @@ RUN echo "deb [arch=armhf] http://ports.ubuntu.com/ $UBUNTU-updates main restric
 RUN echo "deb [arch=armhf] http://ports.ubuntu.com/ $UBUNTU-backports main restricted universe multiverse" >> /etc/apt/sources.list
 
 RUN apt-get update
-RUN apt-get -y install libsodium-dev:armhf libsqlite3-dev:armhf libudev-dev:armhf libssl-dev:armhf libzmq3-dev:armhf liboping-dev:armhf
+RUN apt-get -y install libsodium-dev:armhf libsqlite3-dev:armhf libudev-dev:armhf libssl-dev:armhf libzmq3-dev:armhf liboping-dev:armhf \
+  qt5-default:armhf qtmultimedia5-dev:armhf
 RUN apt-get -y autoremove
 RUN apt-get -y clean
 
