@@ -28,7 +28,8 @@ RUN echo "deb [arch=armhf] http://ports.ubuntu.com/ $UBUNTU-updates main restric
 RUN echo "deb [arch=armhf] http://ports.ubuntu.com/ $UBUNTU-backports main restricted universe multiverse" >> /etc/apt/sources.list
 
 RUN apt-get update
-RUN apt-get -y install libsodium-dev:armhf libsqlite3-dev:armhf libudev-dev:armhf libssl-dev:armhf libzmq3-dev:armhf liboping-dev:armhf \
+RUN apt-get -y install python3-pip \
+  libsodium-dev:armhf libsqlite3-dev:armhf libudev-dev:armhf libssl-dev:armhf libzmq3-dev:armhf liboping-dev:armhf \
   qt5-default:armhf qtmultimedia5-dev:armhf
 RUN apt-get -y autoremove
 RUN apt-get -y clean
@@ -54,8 +55,11 @@ RUN sh -c ". $HOME/.profile \
 RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
 RUN sh -c ". $HOME/.profile \
   && rustup default nightly \
-  && rustup target add armv7-unknown-linux-gnueabihf \
-  && cargo install cargo-deb"
+  && rustup target add armv7-unknown-linux-gnueabihf"
+
+# ansible
+RUN sh -c "pip3 install --user ansible"
+RUN echo 'export PATH=$HOME/.local/bin:$PATH' >> $HOME/.profile
 
 VOLUME /workspace
 WORKDIR /workspace
