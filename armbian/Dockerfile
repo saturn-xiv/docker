@@ -8,7 +8,8 @@ RUN apt-get -y upgrade
 RUN apt-get -y install curl wget build-essential cmake locales pkg-config dh-autoreconf \
   git vim sudo tzdata \
   gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf binutils-multiarch \  
-  libsodium-dev libsqlite3-dev libudev-dev libssl-dev libzmq3-dev liboping-dev libpq-dev
+  libsodium-dev libsqlite3-dev libudev-dev libssl-dev libzmq3-dev liboping-dev \
+  libpq-dev libmysqlclient-dev
 
 RUN dpkg --add-architecture armhf
 RUN echo "deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ $UBUNTU main restricted" > /etc/apt/sources.list
@@ -30,9 +31,10 @@ RUN echo "deb [arch=armhf] http://ports.ubuntu.com/ $UBUNTU-backports main restr
 RUN apt-get update
 RUN apt-get -y install python3-pip \
   libsodium-dev:armhf libsqlite3-dev:armhf libudev-dev:armhf libssl-dev:armhf libzmq3-dev:armhf liboping-dev:armhf \
+  libpq-dev:armhf libmysqlclient-dev:armhf \
   qt5-default:armhf qtmultimedia5-dev:armhf
-RUN apt-get -y autoremove
-RUN apt-get -y clean
+# RUN apt-get -y autoremove
+# RUN apt-get -y clean
 
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
 RUN locale-gen
