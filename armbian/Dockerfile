@@ -8,7 +8,7 @@ RUN apt-get -y upgrade
 RUN apt-get -y install curl wget build-essential cmake locales pkg-config dh-autoreconf \
   git vim sudo tzdata \
   gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf binutils-multiarch \  
-  libsodium-dev libsqlite3-dev libudev-dev libssl-dev libzmq3-dev liboping-dev
+  libsodium-dev libsqlite3-dev libudev-dev libssl-dev libzmq3-dev liboping-dev libpq-dev
 
 RUN dpkg --add-architecture armhf
 RUN echo "deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ $UBUNTU main restricted" > /etc/apt/sources.list
@@ -58,7 +58,7 @@ RUN sh -c ". $HOME/.profile \
   && rustup target add armv7-unknown-linux-gnueabihf"
 
 # ansible
-RUN sh -c "pip3 install --user ansible"
+RUN sh -c "pip3 install --user ansible psycopg2 ipaddress"
 RUN echo 'export PATH=$HOME/.local/bin:$PATH' >> $HOME/.profile
 
 VOLUME /workspace
