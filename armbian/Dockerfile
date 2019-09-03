@@ -31,10 +31,10 @@ RUN echo "deb [arch=armhf] http://ports.ubuntu.com/ $UBUNTU-backports main restr
 RUN apt-get update
 RUN apt-get -y install python3-pip \
   libsodium-dev:armhf libsqlite3-dev:armhf libudev-dev:armhf libssl-dev:armhf libzmq3-dev:armhf liboping-dev:armhf \
-  libpq-dev:armhf libmysqlclient-dev:armhf \
+  # libpq-dev:armhf libmysqlclient-dev:armhf \
   qt5-default:armhf qtmultimedia5-dev:armhf
-# RUN apt-get -y autoremove
-# RUN apt-get -y clean
+RUN apt-get -y autoremove
+RUN apt-get -y clean
 
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
 RUN locale-gen
