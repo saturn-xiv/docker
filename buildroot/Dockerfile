@@ -5,10 +5,8 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt update
 RUN apt -y upgrade
 RUN apt -y install vim sudo locales tzdata \
-  cmake pwgen build-essential git cpio unzip rsync bc wget curl mtd-utils lzop \
-  libncurses5-dev \
-  python3-pip
-
+  cmake build-essential git cpio unzip rsync bc wget curl mtd-utils lzop python libncurses5-dev
+  
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
 RUN locale-gen
 RUN update-locale LANG=en_US.UTF-8
@@ -46,9 +44,6 @@ RUN cd $HOME/build/buildroot-$BUILDROOT_VERSION \
   && make source
 RUN cd $HOME/build/buildroot-$BUILDROOT_VERSION \  
   && make orangepi_one_defconfig \
-  && make source
-RUN cd $HOME/build/buildroot-$BUILDROOT_VERSION \  
-  && make friendlyarm_nanopi_neo2_defconfig \
   && make source
 
 VOLUME /workspace $HOME/build/buildroot-$BUILDROOT_VERSION/output

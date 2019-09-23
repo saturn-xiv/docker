@@ -17,7 +17,7 @@ $ docker run --rm -it --network host -v `pwd`/workspace:/workspace -v `pwd`/outp
 ### 
 
 ```bash
-$ sudo dd if=output/images/sdcard.img of=/dev/sdb bs=1M
+$ sudo dd if=output/images/sdcard.img of=/dev/sdb bs=1M conv=fsync
 ```
 
 ### Document
