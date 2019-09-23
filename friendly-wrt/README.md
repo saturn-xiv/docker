@@ -3,14 +3,14 @@
 - Build by self
 
 ```bash
-$ docker build -t nano-duo2 .
-$ docker run --rm -it -v `pwd`/workspace:/workspace -v `pwd`/output:/home/deploy/build/buildroot-2019.05.1/output nano-duo2:latest
+$ docker build -t friendly-wrt .
+$ docker run --rm -it -v `pwd`/workspace:/workspace -v `pwd`/output:/home/deploy/friendlyarm/manifests/out friendly-wrt:latest
 ```
 
 - From `https://hub.docker.com`
 
 ```bash
-$ docker run --rm -it -v `pwd`/workspace:/workspace -v `pwd`/output:/home/deploy/build/buildroot-2019.05.1/output chonglou/nano-duo2:latest
+$ docker run --rm -it -v `pwd`/workspace:/workspace -v `pwd`/output:/home/deploy/friendlyarm/manifests/out chonglou/friendly-wrt:latest
 ```
 
 ### build for yourself toolchain
