@@ -5,9 +5,8 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt update
 RUN apt -y upgrade
 RUN apt -y install vim sudo locales \
-  git wget python bc \
-  curl
-  
+  cmake build-essential git cpio unzip rsync bc wget curl mtd-utils lzop python libncurses5-dev
+    
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
 RUN locale-gen
 RUN update-locale LANG=en_US.UTF-8
