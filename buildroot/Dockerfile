@@ -36,17 +36,20 @@ ARG BUILDROOT_VERSION="2019.08"
 RUN wget -P $HOME/downloads https://buildroot.org/downloads/buildroot-$BUILDROOT_VERSION.tar.bz2
 RUN tar xf $HOME/downloads/buildroot-$BUILDROOT_VERSION.tar.bz2 -C $HOME/build/
 RUN echo "export BUILDROOT=\$HOME/build/buildroot-$BUILDROOT_VERSION" >> $HOME/.profile
-RUN cd $HOME/build/buildroot-$BUILDROOT_VERSION \  
-  && make raspberrypi3_64_defconfig \
+RUN mkdir $HOME/build/rpi3 \
+  && cd $HOME/build/rpi3 \
+  && make -C $HOME/build/buildroot-$BUILDROOT_VERSION O=$(pwd) raspberrypi3_64_defconfig \
   && make source
-RUN cd $HOME/build/buildroot-$BUILDROOT_VERSION \  
-  && make orangepi_zero_defconfig \
+RUN mkdir $HOME/build/opi0 \
+  && cd $HOME/build/opi0 \
+  && make -C $HOME/build/buildroot-$BUILDROOT_VERSION O=$(pwd) orangepi_zero_defconfig \
   && make source
-RUN cd $HOME/build/buildroot-$BUILDROOT_VERSION \  
-  && make orangepi_one_defconfig \
+RUN mkdir $HOME/build/opi1 \
+  && cd $HOME/build/opi1 \
+  && make -C $HOME/build/buildroot-$BUILDROOT_VERSION O=$(pwd) orangepi_one_defconfig \
   && make source
 
-VOLUME /workspace $HOME/build/buildroot-$BUILDROOT_VERSION/output
+VOLUME /workspace
 WORKDIR /workspace
 
 CMD ["/bin/bash", "-l"]

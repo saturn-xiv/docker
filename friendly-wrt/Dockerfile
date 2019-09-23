@@ -41,11 +41,11 @@ RUN sh -c ". $HOME/.profile \
   && cd $HOME/friendlyarm/manifests \
   && yes "" | repo init -u https://github.com/friendlyarm/friendlywrt_manifests -b master -m h3.xml --repo-url=https://github.com/friendlyarm/repo --no-clone-bundle \
   && repo sync -c --no-clone-bundle"
-RUN sh -c ". $HOME/.profile \
-  && cd $HOME/friendlyarm/manifests \
-  && ./build.sh nanopi_duo2.mk"
+# RUN sh -c ". $HOME/.profile \
+#   && cd $HOME/friendlyarm/manifests \
+#   && ./build.sh nanopi_duo2.mk"
 
 VOLUME /workspace $HOME/friendlyarm/manifests/out
-WORKDIR /workspace $HOME/friendlyarm/manifests/out
+WORKDIR /workspace
 
 CMD ["/bin/bash", "-l"]
