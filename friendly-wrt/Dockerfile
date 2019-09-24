@@ -43,11 +43,11 @@ RUN sh -c ". $HOME/.profile \
   && yes "" | repo init -u https://github.com/friendlyarm/friendlywrt_manifests -b master -m h3.xml --repo-url=https://github.com/friendlyarm/repo --no-clone-bundle \
   && repo sync -c --no-clone-bundle"
 
-RUN git clone https://github.com/friendlyarm/friendlywrt $HOME/friendlywrt
-RUN sh -c ". $HOME/.profile \
-  && cd $HOME/friendlywrt \
-  && ./scripts/feeds update -a \
-  && ./scripts/feeds install -a"
+# RUN git clone https://github.com/friendlyarm/friendlywrt $HOME/friendlywrt
+# RUN sh -c ". $HOME/.profile \
+#   && cd $HOME/friendlywrt \
+#   && ./scripts/feeds update -a \
+#   && ./scripts/feeds install -a"
 
 # RUN mknod /dev/loop0 b 7 0
 # RUN sh -c ". $HOME/.profile \
