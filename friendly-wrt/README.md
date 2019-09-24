@@ -4,21 +4,20 @@
 
 ```bash
 $ docker build -t friendly-wrt .
-$ docker run --rm -it -v `pwd`/workspace:/workspace -v `pwd`/output:/home/deploy/friendlyarm/manifests/out friendly-wrt:latest
+$ docker run --rm -it --privileged -v `pwd`:/workspace friendly-wrt:latest
 ```
 
 - From `https://hub.docker.com`
 
 ```bash
-$ docker run --rm -it -v `pwd`/workspace:/workspace -v `pwd`/output:/home/deploy/friendlyarm/manifests/out chonglou/friendly-wrt:latest
+$ docker run --rm -it --privileged -v `pwd`:/workspace chonglou/friendly-wrt:latest
 ```
 
 ### build for yourself toolchain
 
 ```bash
-> cd ~/build/buildroot-2019.02
-> make menuconfig 
-> make -j
+> cd ~/friendlyarm/manifests
+> ./build.sh nanopi_duo2.mk
 ```
 
 ### 

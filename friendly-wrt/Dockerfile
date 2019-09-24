@@ -5,7 +5,8 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt update
 RUN apt -y upgrade
 RUN apt -y install vim sudo locales \
-  cmake build-essential git cpio unzip rsync bc wget curl mtd-utils lzop python libncurses5-dev
+  cmake build-essential git cpio unzip rsync bc wget curl mtd-utils lzop python libncurses5-dev libz-dev \
+  dosfstools subversion parted gawk bison flex pkg-config dh-autoreconf
     
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
 RUN locale-gen
@@ -41,11 +42,19 @@ RUN sh -c ". $HOME/.profile \
   && cd $HOME/friendlyarm/manifests \
   && yes "" | repo init -u https://github.com/friendlyarm/friendlywrt_manifests -b master -m h3.xml --repo-url=https://github.com/friendlyarm/repo --no-clone-bundle \
   && repo sync -c --no-clone-bundle"
+
+RUN git clone https://github.com/friendlyarm/friendlywrt $HOME/friendlywrt
+RUN sh -c ". $HOME/.profile \
+  && cd $HOME/friendlywrt \
+  && ./scripts/feeds update -a \
+  && ./scripts/feeds install -a"
+
+# RUN mknod /dev/loop0 b 7 0
 # RUN sh -c ". $HOME/.profile \
 #   && cd $HOME/friendlyarm/manifests \
 #   && ./build.sh nanopi_duo2.mk"
 
-VOLUME /workspace $HOME/friendlyarm/manifests/out
+VOLUME /workspace
 WORKDIR /workspace
 
 CMD ["/bin/bash", "-l"]

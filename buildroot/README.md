@@ -4,14 +4,14 @@
 
 ```bash
 $ docker build -t buildroot .
-$ docker run --rm -it --network host -v `pwd`/workspace:/workspace -v `pwd`/output:/home/deploy/build/buildroot/output buildroot:latest
+$ docker run --rm -it --network host -v `pwd`:/workspace buildroot:latest
 ```
 
 - From `https://hub.docker.com`
 
 ```bash
 $ docker pull chonglou/buildroot:latest
-$ docker run --rm -it --network host -v `pwd`/workspace:/workspace -v `pwd`/output:/home/deploy/build/buildroot/output chonglou/buildroot:latest
+$ docker run --rm -it --network host -v `pwd`:/workspace chonglou/buildroot:latest
 ```
 
 ### 
