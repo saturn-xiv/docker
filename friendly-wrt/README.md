@@ -4,13 +4,13 @@
 
 ```bash
 $ docker build -t friendly-wrt .
-$ docker run --rm -it --privileged -v `pwd`:/workspace friendly-wrt:latest
+$ docker run --rm -it --privileged -v /dev:/dev -v `pwd`:/workspace friendly-wrt:latest
 ```
 
 - From `https://hub.docker.com`
 
 ```bash
-$ docker run --rm -it --privileged -v `pwd`:/workspace chonglou/friendly-wrt:latest
+$ docker run --rm -it --privileged -v /dev:/dev -v `pwd`:/workspace chonglou/friendly-wrt:latest
 ```
 
 ### build for yourself toolchain
