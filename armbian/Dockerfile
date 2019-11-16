@@ -49,7 +49,7 @@ USER deploy
 
 
 # nodejs
-RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.35.0/install.sh | sh
+RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.35.1/install.sh | sh
 RUN sh -c ". $HOME/.profile \
   && nvm install node"
 
