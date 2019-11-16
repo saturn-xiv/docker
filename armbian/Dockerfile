@@ -54,7 +54,7 @@ RUN sh -c ". $HOME/.profile \
   && nvm install node"
 
 # https://mexus.github.io/rustup-components-history/ 
-RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
+RUN curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh -s -- -y
 RUN sh -c ". $HOME/.profile \
   && rustup default nightly \
   && rustup target add armv7-unknown-linux-gnueabihf"
