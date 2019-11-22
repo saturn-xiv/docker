@@ -6,7 +6,7 @@ ENV UBUNTU bionic
 RUN apt-get update
 RUN apt-get -y upgrade
 RUN apt-get -y install curl wget build-essential cmake locales pkg-config dh-autoreconf \
-  git vim sudo tzdata \
+  git vim sudo tzdata pwgen \
   gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf binutils-multiarch \  
   libsodium-dev libsqlite3-dev libudev-dev libssl-dev libzmq3-dev liboping-dev \
   libpq-dev libmysqlclient-dev
