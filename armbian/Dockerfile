@@ -55,9 +55,8 @@ RUN sh -c ". $HOME/.profile \
 
 # https://mexus.github.io/rustup-components-history/ 
 RUN curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh -s -- -y
-#RUN sh -c ". $HOME/.profile \
-#  && rustup default nightly \
-#  && rustup target add armv7-unknown-linux-gnueabihf"
+RUN sh -c ". $HOME/.profile \
+  && rustup target add armv7-unknown-linux-gnueabihf"
 
 # ansible
 RUN sh -c "pip3 install --user ansible psycopg2 ipaddress"
