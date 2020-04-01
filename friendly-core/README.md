@@ -1,6 +1,6 @@
 # armbian
 
-rust-nightly & nodejs development environment for friendly-core.
+rust & nodejs development environment for friendly-core.
 
 ### build for yourself
 

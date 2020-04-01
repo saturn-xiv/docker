@@ -2,6 +2,7 @@ FROM ubuntu:xenial
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV UBUNTU bionic
+ENV HOSTNAME friendly-core
 
 RUN apt-get update
 RUN apt-get -y upgrade

@@ -1,7 +1,6 @@
 # armbian
 
-rust-nightly & nodejs development environment for armbian.
-
+rust & nodejs development environment for armbian.
 
 ### build for yourself
 

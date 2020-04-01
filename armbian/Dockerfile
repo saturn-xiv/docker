@@ -2,6 +2,7 @@ FROM ubuntu:bionic
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV UBUNTU bionic
+ENV HOSTNAME armbian
 
 RUN apt-get update
 RUN apt-get -y upgrade
