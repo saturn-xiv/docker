@@ -11,14 +11,13 @@ RUN apt-get -y install curl wget build-essential cmake locales pkg-config dh-aut
   git vim sudo tzdata pwgen \
   gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf binutils-multiarch \  
   libsodium-dev libsqlite3-dev libudev-dev libssl-dev libzmq3-dev liboping-dev libasound2-dev \
-  libpq-dev libmysqlclient-dev
+  libpq-dev libmariadb-dev
 
 RUN dpkg --add-architecture armhf
 
 RUN apt-get update
 RUN apt-get -y install python3-pip \
-  libsodium-dev:armhf libsqlite3-dev:armhf libudev-dev:armhf libssl-dev:armhf libzmq3-dev:armhf liboping-dev:armhf libasound2-dev:armhf\
-  # libpq-dev:armhf libmysqlclient-dev:armhf \
+  libsodium-dev:armhf libsqlite3-dev:armhf libudev-dev:armhf libssl-dev:armhf libzmq3-dev:armhf liboping-dev:armhf libasound2-dev:armhf \  
   qt5-default:armhf qtmultimedia5-dev:armhf
 RUN apt-get -y autoremove
 RUN apt-get -y clean

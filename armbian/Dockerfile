@@ -31,8 +31,7 @@ RUN echo "deb [arch=armhf] http://ports.ubuntu.com/ $UBUNTU-backports main restr
 
 RUN apt-get update
 RUN apt-get -y install python3-pip \
-  libsodium-dev:armhf libsqlite3-dev:armhf libudev-dev:armhf libssl-dev:armhf libzmq3-dev:armhf liboping-dev:armhf libasound2-dev:armhf\
-  # libpq-dev:armhf libmysqlclient-dev:armhf \
+  libsodium-dev:armhf libsqlite3-dev:armhf libudev-dev:armhf libssl-dev:armhf libzmq3-dev:armhf liboping-dev:armhf libasound2-dev:armhf \  
   qt5-default:armhf qtmultimedia5-dev:armhf
 RUN apt-get -y autoremove
 RUN apt-get -y clean
