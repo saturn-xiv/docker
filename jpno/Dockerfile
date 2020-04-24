@@ -9,7 +9,7 @@ RUN apt -y install apt-utils apt-transport-https wget gnupg software-properties-
   cpio meson intltool libtool gawk texinfo bison bc zsh moreutils tree tzdata \
   libncurses5-dev \  
   net-tools lsof iputils-ping dnsutils psmisc inotify-tools logrotate locales \  
-  zip unzip bsdtar telnet git vim pwgen sudo gperf \
+  zip unzip telnet git vim pwgen sudo gperf \
   libssl-dev libreadline-dev zlib1g-dev \
   python3-pip libaio1
 
