@@ -10,7 +10,8 @@ RUN apt-get -y install curl wget build-essential cmake locales pkg-config dh-aut
   git vim sudo tzdata pwgen \
   gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf binutils-multiarch \  
   libsodium-dev libsqlite3-dev libudev-dev libssl-dev libzmq3-dev liboping-dev libasound2-dev \
-  libpq-dev libmysqlclient-dev
+  libpq-dev libmysqlclient-dev \
+  rsync openssh-client
 
 RUN dpkg --add-architecture armhf
 RUN echo "deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ $UBUNTU main restricted" > /etc/apt/sources.list
@@ -61,6 +62,10 @@ RUN sh -c ". $HOME/.profile \
 # ansible
 RUN sh -c "pip3 install --user ansible psycopg2 ipaddress"
 RUN echo 'export PATH=$HOME/.local/bin:$PATH' >> $HOME/.profile
+
+# axis
+RUN sh -c ". $HOME/.profile \
+  && cargo install --git https://github.com/saturn-xiv/axis.git"
 
 VOLUME /workspace
 WORKDIR /workspace
