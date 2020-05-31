@@ -53,6 +53,8 @@ USER deploy
 RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.35.3/install.sh | sh
 RUN sh -c ". $HOME/.profile \
   && nvm install node"
+RUN sh -c ". $HOME/.profile \
+  && npm install -g yarn"
 
 # https://mexus.github.io/rustup-components-history/ 
 RUN curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh -s -- -y
